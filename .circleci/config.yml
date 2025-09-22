@@ -17,7 +17,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y nodejs npm jq
-            npm install -g cdktf-cli
+            sudo npm install -g cdktf-cli
       - run:
           name: Install Python dependencies
           command: |
