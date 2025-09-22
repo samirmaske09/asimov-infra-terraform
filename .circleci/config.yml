@@ -27,6 +27,7 @@ jobs:
           name: Install AWS CLI
           command: |
             sudo apt-get install -y awscli
+            node --version
       - run:
           name: Assume AWS role using OIDC
           command: |
