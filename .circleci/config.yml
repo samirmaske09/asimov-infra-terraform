@@ -1,0 +1,54 @@
+version: 2.1
+
+executors:
+  python-oidc-executor:
+    docker:
+      - image: cimg/python:3.11
+    environment:
+      AWS_DEFAULT_REGION: "us-east-1"
+
+jobs:
+  deploy-aws:
+    executor: python-oidc-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Node.js and cdktf CLI
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y nodejs npm jq
+            npm install -g cdktf-cli
+      - run:
+          name: Install Python dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+      - run:
+          name: Install AWS CLI
+          command: |
+            sudo apt-get install -y awscli
+      - run:
+          name: Assume AWS role using OIDC
+          command: |
+            export OIDC_TOKEN=$(echo $CIRCLE_OIDC_TOKEN)
+            export AWS_ROLE_ARN="arn:aws:iam::054367267072:role/CircleCISnykReaderRole"
+            export AWS_SESSION_NAME="circleci-session"
+            CREDENTIALS=$(aws sts assume-role-with-web-identity \
+              --role-arn "$AWS_ROLE_ARN" \
+              --role-session-name "$AWS_SESSION_NAME" \
+              --web-identity-token "$OIDC_TOKEN" \
+              --duration-seconds 3600)
+            export AWS_ACCESS_KEY_ID=$(echo $CREDENTIALS | jq -r .Credentials.AccessKeyId)
+            export AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIALS | jq -r .Credentials.SecretAccessKey)
+            export AWS_SESSION_TOKEN=$(echo $CREDENTIALS | jq -r .Credentials.SessionToken)
+      - run:
+          name: Deploy to AWS using cdktf
+          command: |
+            cdktf synth
+            cdktf deploy --auto-approve
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy-aws
