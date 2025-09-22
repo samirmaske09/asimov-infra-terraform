@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Initialize CDKTF project
           command: |
-            echo | cdktf init --template=python --local --from-stdin
+            echo | cdktf init --template=python --local
       - run:
           name: Install AWS CLI
           command: |
