@@ -31,7 +31,7 @@ jobs:
           name: Assume AWS role using OIDC
           command: |
             export OIDC_TOKEN=$(echo $CIRCLE_OIDC_TOKEN)
-            export AWS_ROLE_ARN="arn:aws:iam::054367267072:role/CircleCISnykReaderRole"
+            export AWS_ROLE_ARN="arn:aws:iam::961341535277:role/newcircleci"
             export AWS_SESSION_NAME="circleci-session"
             CREDENTIALS=$(aws sts assume-role-with-web-identity \
               --role-arn "$AWS_ROLE_ARN" \
