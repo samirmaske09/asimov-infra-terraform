@@ -16,7 +16,13 @@ jobs:
           name: Install Node.js and cdktf CLI
           command: |
             sudo apt-get update
-             sudo apt-get remove -y nodejs
+            # Add NodeSource repository for Node.js 16
+            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            # Install Node.js 16 and npm
+            sudo apt-get install -y nodejs jq
+            node --version    # verify the version is v16.x.x)
+            npm --version
+            # Install cdktf-cli globally
             sudo npm install -g cdktf-cli
       - run:
           name: Install Python dependencies
@@ -27,8 +33,6 @@ jobs:
           name: Install AWS CLI
           command: |
             sudo apt-get install -y awscli
-            echo "----------"
-            node --version
       - run:
           name: Assume AWS role using OIDC
           command: |
