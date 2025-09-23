@@ -46,7 +46,7 @@ jobs:
           paths:
             - cdktf_project
 
-    deploy-aws:
+  deploy-aws:
     executor: python-oidc-executor
     steps:
       - attach_workspace:
