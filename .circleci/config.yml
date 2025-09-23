@@ -77,7 +77,10 @@ jobs:
           command: |
             cd ~/cdktf_project
             python -m pip install --upgrade pip
-            pip install -r requirements.txt
+            # Install core CDKTF Python bindings
+            pip install cdktf constructs
+            # Install AWS provider bindings
+            pip install cdktf-cdktf-provider-aws
 
       - run:
           name: Install AWS CLI
