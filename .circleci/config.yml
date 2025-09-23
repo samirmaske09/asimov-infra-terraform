@@ -40,14 +40,13 @@ jobs:
             cd ~/cdktf_project
             cdktf init --template=python --local \
               --project-name=my_project \
-              --project-description="CircleCI CDKTF Project"
-
+              --project-description="CircleCI CDKTF Project" \
       - persist_to_workspace:
           root: ~/
           paths:
             - cdktf_project
 
-  deploy-aws:
+    deploy-aws:
     executor: python-oidc-executor
     steps:
       - attach_workspace:
