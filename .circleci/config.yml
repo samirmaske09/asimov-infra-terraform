@@ -38,7 +38,7 @@ jobs:
           command: |
             mkdir -p ~/cdktf_project
             cd ~/cdktf_project
-            cdktf init --template=python --local --no-pipenv \
+            cdktf init --template=python --local \
               --project-name=my_project \
               --project-description="CircleCI CDKTF Project" \
       - persist_to_workspace:
