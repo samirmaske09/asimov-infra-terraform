@@ -40,8 +40,8 @@ jobs:
             cd ~/cdktf_project
             cdktf init --template=python --local \
               --project-name=my_project \
-              --project-description="CircleCI CDKTF Project" \
-              --provider "hashicorp/aws@~>5.0"
+              --project-description="CircleCI CDKTF Project"
+            cdktf provider add "hashicorp/aws@~>5.0"
       - persist_to_workspace:
           root: ~/
           paths:
