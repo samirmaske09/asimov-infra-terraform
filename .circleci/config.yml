@@ -78,7 +78,7 @@ jobs:
           command: |
             cd ~/cdktf_project
             pipenv install cdktf constructs
-            pipenv install cdktf-cdktf-provider-aws
+            pipenv install cdktf constructs cdktf-cdktf-provider-aws
       - run:
           name: Install AWS CLI
           command: |
