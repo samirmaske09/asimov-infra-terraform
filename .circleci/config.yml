@@ -79,6 +79,13 @@ jobs:
             sudo npm install -g cdktf-cli
 
       - run:
+          name: Install Python dependencies
+          command: |
+            cd ~/cdktf_project
+            pipenv install constructs
+            pipenv install cdktf-cdktf-provider-aws
+
+      - run:
           name: Install AWS CLI
           command: |
             sudo apt-get install -y awscli
