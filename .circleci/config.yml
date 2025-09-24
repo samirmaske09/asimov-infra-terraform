@@ -132,7 +132,7 @@ jobs:
             cd ~/cdktf_project
             cdktf get
             cdktf synth
-            cdktf deploy s3-stack --auto-approve
+            cdktf deploy infra --auto-approve
 
 workflows:
   version: 2
