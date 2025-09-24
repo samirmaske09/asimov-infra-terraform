@@ -41,7 +41,12 @@ jobs:
             cdktf init --template=python --local \
               --project-name=my_project \
               --project-description="CircleCI CDKTF Project"
+            # Add AWS provider so cdktf.json has a provider
             cdktf provider add "hashicorp/aws@~>5.0"
+
+            # Install Python dependencies into Pipenv
+            pipenv install cdktf constructs cdktf-cdktf-provider-aws
+
       - persist_to_workspace:
           root: ~/
           paths:
@@ -73,12 +78,6 @@ jobs:
             npm --version
             sudo npm install -g cdktf-cli
 
-      - run:
-          name: Install Python dependencies
-          command: |
-            cd ~/cdktf_project
-            pipenv install cdktf constructs
-            pipenv install cdktf constructs cdktf-cdktf-provider-aws
       - run:
           name: Install AWS CLI
           command: |

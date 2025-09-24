@@ -27,7 +27,7 @@ jobs:
           name: Install Node.js and cdktf CLI
           command: |
             sudo apt-get update
-            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt-get install -y nodejs jq
             node --version
             npm --version
@@ -40,7 +40,8 @@ jobs:
             cd ~/cdktf_project
             cdktf init --template=python --local \
               --project-name=my_project \
-              --project-description="CircleCI CDKTF Project" \
+              --project-description="CircleCI CDKTF Project"
+            cdktf provider add "hashicorp/aws@~>5.0"
       - persist_to_workspace:
           root: ~/
           paths:
@@ -66,7 +67,7 @@ jobs:
           name: Install Node.js and cdktf CLI
           command: |
             sudo apt-get update
-            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt-get install -y nodejs jq
             node --version
             npm --version
@@ -76,9 +77,8 @@ jobs:
           name: Install Python dependencies
           command: |
             cd ~/cdktf_project
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
-
+            pipenv install cdktf constructs
+            pipenv install cdktf constructs cdktf-cdktf-provider-aws
       - run:
           name: Install AWS CLI
           command: |
