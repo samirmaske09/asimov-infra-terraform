@@ -45,7 +45,8 @@ jobs:
           name: Add AWS provider
           command: | 
             cd ~/cdktf_project
-            cdktf provider add "hashicorp/aws@~>5.0"
+            jq '.terraformProviders = ["hashicorp/aws@~>5.0"]' cdktf.json > tmp.json && mv tmp.json cdktf.json
+            #cdktf provider add "hashicorp/aws@~>5.0"
       - run:
           name: Show cdktf.json content
           command: |
