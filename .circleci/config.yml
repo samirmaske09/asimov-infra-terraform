@@ -132,7 +132,7 @@ jobs:
             cd ~/cdktf_project
             cdktf get
             cdktf synth
-            cdktf deploy infra --auto-approve
+            cdktf destroy infra --auto-approve
 
 workflows:
   version: 2
