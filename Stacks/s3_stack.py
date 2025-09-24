@@ -1,18 +1,25 @@
+# Stacks/s3_stack.py
 from constructs import Construct
-from providers import AwsBaseStack
-from cdktf_cdktf_provider_aws.s3_bucket import S3Bucket
-from cdktf_cdktf_provider_aws.s3_bucket_versioning import S3BucketVersioning
+from cdktf import App, TerraformStack, TerraformOutput
+from imports.aws import AwsProvider, S3Bucket
 
-class StorageStack(AwsBaseStack):
-    def __init__(self, scope: Construct, id: str, ctx):
-        super().__init__(scope, id, ctx)
+class S3Stack(TerraformStack):
+    def __init__(self, scope: Construct, ns: str):
+        super().__init__(scope, ns)
 
-        self.data_bucket = S3Bucket(self, "data",
-            bucket=f"{ctx.project}-{ctx.env}-data-bkt",
-            force_destroy=False
+        # AWS Provider
+        AwsProvider(self, "AWS", region="us-east-1")  # change region if needed
+
+        # Create S3 Bucket
+        bucket = S3Bucket(self, "MyDemoBucket",
+            bucket="cdktf-simple-demo-bucket-123456"  # must be globally unique!
         )
 
-        S3BucketVersioning(self, "ver",
-            bucket=self.data_bucket.id,
-            versioning_configuration={"status": "Enabled"}
+        # Output bucket name
+        TerraformOutput(self, "bucket_name",
+            value=bucket.bucket
         )
+
+app = App()
+S3Stack(app, "s3-stack")
+app.synth()

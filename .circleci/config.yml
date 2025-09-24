@@ -124,7 +124,7 @@ jobs:
             cd ~/cdktf_project
             cdktf get
             cdktf synth
-            cdktf deploy --auto-approve
+            cdktf deploy s3_stack --auto-approve
 
 workflows:
   version: 2
