@@ -3,8 +3,8 @@ from constructs import Construct
 from cdktf import App
 
 # Import your stacks
-from Stacks.vpc_stack import VpcStack
-from Stacks.s3_stack import S3Stack
+from stacks.vpc_stack import VpcStack
+from stacks.s3_stack import S3Stack
 
 app = App()
 
