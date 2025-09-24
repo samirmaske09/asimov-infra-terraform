@@ -47,6 +47,13 @@ jobs:
             cd ~/cdktf_project
             cdktf provider add "hashicorp/aws@~>5.0"
       - run:
+          name: Show cdktf.json content
+          command: |
+            cd ~/cdktf_project
+            echo "===== cdktf.json content ====="
+            cat cdktf.json
+            echo "============================="
+      - run:
           name: Generate provider bindings
           command: |
             cd ~/cdktf_project
