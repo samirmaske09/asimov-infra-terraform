@@ -1,15 +1,24 @@
-#!/usr/bin/env python
 from constructs import Construct
-from cdktf import App
+from cdktf import App, TerraformStack, TerraformOutput
+from imports.aws.provider import AwsProvider
+from imports.aws.s3_bucket import S3Bucket
 
-# Import your stacks
-from stacks.vpc_stack import VpcStack
-from stacks.s3_stack import S3Stack
+
+class S3Stack(TerraformStack):
+    def __init__(self, scope: Construct, id: str):
+        super().__init__(scope, id)
+
+        AwsProvider(self, "AWS", region="us-east-1")
+
+        bucket = S3Bucket(
+            self,
+            "MyBucket",
+            bucket="circleci-cdktf-bucket-123456"
+        )
+
+        TerraformOutput(self, "bucket_name", value=bucket.bucket)
+
 
 app = App()
-
-# Instantiate both stacks
-VpcStack(app, "vpc")
-S3Stack(app, "s3")
-
+S3Stack(app, "s3-stack")
 app.synth()
