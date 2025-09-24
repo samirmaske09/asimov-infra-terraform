@@ -54,6 +54,7 @@ jobs:
             echo "===== cdktf.json content ====="
             cat cdktf.json
             echo "============================="
+            cat main.py
       - run:
           name: Generate provider bindings
           command: |
