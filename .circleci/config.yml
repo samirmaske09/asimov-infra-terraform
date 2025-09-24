@@ -67,7 +67,7 @@ jobs:
           name: Install Node.js and cdktf CLI
           command: |
             sudo apt-get update
-            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt-get install -y nodejs jq
             node --version
             npm --version
