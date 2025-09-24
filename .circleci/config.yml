@@ -48,6 +48,12 @@ jobs:
             jq '.terraformProviders = ["hashicorp/aws@~>5.0"]' cdktf.json > tmp.json && mv tmp.json cdktf.json
             #cdktf provider add "hashicorp/aws@~>5.0"
       - run:
+          name: Overwrite main.py with file.py
+          command: |
+            cd ~/cdktf_project
+            cp ../project/file.py main.py
+
+      - run:
           name: Show cdktf.json content
           command: |
             cd ~/cdktf_project
