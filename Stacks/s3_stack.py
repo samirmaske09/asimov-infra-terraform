@@ -1,21 +1,13 @@
-# Stacks/s3_stack.py
 from constructs import Construct
-from cdktf import TerraformStack, TerraformOutput
-from imports.aws import AwsProvider, S3Bucket
+from cdktf import TerraformStack
+from imports.aws import S3Bucket
 
 class S3Stack(TerraformStack):
-    def __init__(self, scope: Construct, ns: str):
-        super().__init__(scope, ns)
+    def __init__(self, scope: Construct, id: str):
+        super().__init__(scope, id)
 
-        # AWS Provider
-        AwsProvider(self, "AWS", region="us-east-1")
-
-        # Create S3 Bucket
-        bucket = S3Bucket(self, "MyDemoBucket",
-            bucket="cdktf-simple-demo-bucket-123456"  # must be globally unique
-        )
-
-        # Output bucket name
-        TerraformOutput(self, "bucket_name",
-            value=bucket.bucket
+        # Example S3 bucket
+        S3Bucket(self, "MyBucket",
+                 bucket="my-cdktf-bucket-example-12345",
+                 force_destroy=True
         )
